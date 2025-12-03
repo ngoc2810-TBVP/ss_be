@@ -56,7 +56,7 @@ const LoginClient = () => {
           // Display an error alert if the token is undefined or null
           setShowErrorAlert(true);
         }
-        // Kiểm tra xem token đã được lưu chưa
+        // Kiểm tra xem token đã được lưu chưa 
         const storedToken = Cookies.get("token");
         console.log("Stored Token:", storedToken);
 

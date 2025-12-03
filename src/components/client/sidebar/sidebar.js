@@ -24,7 +24,9 @@ export default function HeaderComponent() {
 
   const token = Cookies.get("token");
   const avatar = Cookies.get("avatar");
-
+  const handleCartClick = () => {
+    navigate("/cart"); // Chuyển sang trang giỏ hàng
+  };
   useEffect(() => {
     const fetchProductsCategory = async () => {
       try {
@@ -209,7 +211,8 @@ export default function HeaderComponent() {
           </div>
 
           {/* Giỏ hàng Section */}
-          <div className="header-info-item">
+          <div className="header-info-item" onClick={handleCartClick}>
+
             <ShoppingCartOutlined
               style={{ fontSize: "24px", color: "#ff7b00" }}
             />

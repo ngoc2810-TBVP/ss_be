@@ -4,6 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import io from 'socket.io-client';
 import "./detail.css";
 import priceNewProduct from '../helper/priceNew';
+import Cookies from "js-cookie"; // nhớ import thư viện
 
 function DetailProductClient() {
   const API = process.env.REACT_APP_API_URL_CLIENT;
@@ -15,6 +16,7 @@ function DetailProductClient() {
   const [loading, setLoading] = useState(true);
   const [phoneNumber, setPhoneNumber] = useState("");
   const [socket, setSocket] = useState(null);
+  const [quantity, setQuantity] = useState(1); // thêm state số lượng
 
   useEffect(() => {
     // Kết nối đến server qua cổng 8080
@@ -92,7 +94,45 @@ function DetailProductClient() {
       console.log("Error:", error);
     }
   };
+  const handleAddToCart = async () => {
+    if (quantity < 1) {
+      message.warning("Vui lòng nhập số lượng hợp lệ!");
+      return;
+    }
 
+    try {
+      // Lấy token từ cookies
+      const token = Cookies.get("token");
+      if (!token) {
+        message.error("Vui lòng đăng nhập để thêm sản phẩm vào giỏ hàng!");
+        return;
+      }
+
+      console.log(product._id + "===" + quantity)
+      const response = await fetch(`${API}/cart/add`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`, // gửi token để xác thực
+        },
+        body: JSON.stringify({
+          product_id: product._id,
+          quantity,
+        }),
+      });
+
+      const result = await response.json();
+
+      if (result.status === "success") {
+        message.success(`Đã thêm ${quantity} sản phẩm vào giỏ hàng!`);
+      } else {
+        message.error(result.message || "Thêm vào giỏ hàng thất bại!");
+      }
+    } catch (error) {
+      console.error(error);
+      message.error("Có lỗi khi thêm sản phẩm vào giỏ hàng!");
+    }
+  };
   return (
     <div>
       {loading ? (
@@ -120,8 +160,23 @@ function DetailProductClient() {
                   Đặt hàng nhanh
                 </Button>
               </div>
+              {/* Thêm phần nhập số lượng và thêm vào giỏ hàng */}
+              <div className="add-to-cart mt-3">
+                <Input
+                  type="number"
+                  min={1}
+                  value={quantity}
+                  onChange={(e) => setQuantity(parseInt(e.target.value))}
+                  className="quantity-input"
+                  placeholder="Số lượng"
+                />
+                <Button type="default" className="add-cart-button" onClick={handleAddToCart}>
+                  Thêm vào giỏ hàng
+                </Button>
+              </div>
             </div>
           </div>
+
         </div>
       )}
     </div>

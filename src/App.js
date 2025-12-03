@@ -27,7 +27,8 @@ import AdminCreateProductCategory from "./components/admin/products-category/cre
 import EditRole from "./components/admin/roles/edit";
 import AdminUsers from "./components/admin/user";
 import AdminOrders from "./components/admin/orders";
-
+import CartClient from "./components/client/cart/cart";
+import CheckoutClient from "./components/client/checkout/checkout";
 function App() {
   return (
     <BrowserRouter>
@@ -152,6 +153,9 @@ function App() {
           <Route index element={<HomeClient />} />
           <Route path="category/:slug" element={<ClientProductsInCategory />} />
           <Route path="/:slug" element={<DetailProductClient />} />
+          <Route path="/cart" element={<CartClient />} />
+          <Route path="/checkout" element={<CheckoutClient />} />
+
         </Route>
         <Route path={`/error404`} element={<Error404 />} />
       </Routes>
