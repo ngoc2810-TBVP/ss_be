@@ -146,14 +146,34 @@ export default function SidebarAdmin({ toggleTheme }) {
   const items = [];
 
   // Check permissions and add items to array
+  if (true) {
+    items.push({
+      label: (
+        <Link to="/admin/dashboard">
+          <span
+            className={`textMenu ${location.pathname === "/admin/dashboard" ? "active" : ""
+              }`}
+          >
+            Dashboard
+          </span>
+        </Link>
+      ),
+      icon: (
+        <InsertRowBelowOutlined
+          className={`custom-icon ${location.pathname === "/admin/products-category" ? "active" : ""
+            }`}
+        />
+      ),
+      key: "/admin/products-category",
+    });
+  }
   if (permissions.includes("products-category_view")) {
     items.push({
       label: (
         <Link to="/admin/products-category">
           <span
-            className={`textMenu ${
-              location.pathname === "/admin/products-category" ? "active" : ""
-            }`}
+            className={`textMenu ${location.pathname === "/admin/products-category" ? "active" : ""
+              }`}
           >
             Danh mục sản phẩm
           </span>
@@ -161,9 +181,8 @@ export default function SidebarAdmin({ toggleTheme }) {
       ),
       icon: (
         <InsertRowBelowOutlined
-          className={`custom-icon ${
-            location.pathname === "/admin/products-category" ? "active" : ""
-          }`}
+          className={`custom-icon ${location.pathname === "/admin/products-category" ? "active" : ""
+            }`}
         />
       ),
       key: "/admin/products-category",
@@ -174,9 +193,8 @@ export default function SidebarAdmin({ toggleTheme }) {
       label: (
         <Link to="/admin/products">
           <span
-            className={`textMenu ${
-              location.pathname === "/admin/products" ? "active" : ""
-            }`}
+            className={`textMenu ${location.pathname === "/admin/products" ? "active" : ""
+              }`}
           >
             Sản phẩm
           </span>
@@ -184,9 +202,8 @@ export default function SidebarAdmin({ toggleTheme }) {
       ),
       icon: (
         <InsertRowBelowOutlined
-          className={`custom-icon ${
-            location.pathname === "/admin/products" ? "active" : ""
-          }`}
+          className={`custom-icon ${location.pathname === "/admin/products" ? "active" : ""
+            }`}
         />
       ),
       key: "/admin/products",
@@ -198,9 +215,8 @@ export default function SidebarAdmin({ toggleTheme }) {
       label: (
         <Link to="/admin/orders">
           <span
-            className={`textMenu ${
-              location.pathname === "/admin/orders" ? "active" : ""
-            }`}
+            className={`textMenu ${location.pathname === "/admin/orders" ? "active" : ""
+              }`}
           >
             Đơn hàng
           </span>
@@ -208,9 +224,8 @@ export default function SidebarAdmin({ toggleTheme }) {
       ),
       icon: (
         <InsertRowBelowOutlined
-          className={`custom-icon ${
-            location.pathname === "/admin/orders" ? "active" : ""
-          }`}
+          className={`custom-icon ${location.pathname === "/admin/orders" ? "active" : ""
+            }`}
         />
       ),
       key: "/admin/orders",
@@ -223,9 +238,8 @@ export default function SidebarAdmin({ toggleTheme }) {
       label: (
         <Link to="/admin/users">
           <span
-            className={`textMenu ${
-              location.pathname === "/admin/users" ? "active" : ""
-            }`}
+            className={`textMenu ${location.pathname === "/admin/users" ? "active" : ""
+              }`}
           >
             Người dùng
           </span>
@@ -233,9 +247,8 @@ export default function SidebarAdmin({ toggleTheme }) {
       ),
       icon: (
         <UserSwitchOutlined
-          className={`custom-icon ${
-            location.pathname === "/admin/users" ? "active" : ""
-          }`}
+          className={`custom-icon ${location.pathname === "/admin/users" ? "active" : ""
+            }`}
         />
       ),
       key: "/admin/users",
@@ -248,9 +261,8 @@ export default function SidebarAdmin({ toggleTheme }) {
       label: (
         <Link to="/admin/roles">
           <span
-            className={`textMenu ${
-              location.pathname === "/admin/roles" ? "active" : ""
-            }`}
+            className={`textMenu ${location.pathname === "/admin/roles" ? "active" : ""
+              }`}
           >
             Nhóm quyền
           </span>
@@ -258,9 +270,8 @@ export default function SidebarAdmin({ toggleTheme }) {
       ),
       icon: (
         <UserSwitchOutlined
-          className={`custom-icon ${
-            location.pathname === "/admin/roles" ? "active" : ""
-          }`}
+          className={`custom-icon ${location.pathname === "/admin/roles" ? "active" : ""
+            }`}
         />
       ),
       key: "/admin/roles",
@@ -272,9 +283,8 @@ export default function SidebarAdmin({ toggleTheme }) {
       label: (
         <Link to="/admin/permissions">
           <span
-            className={`textMenu ${
-              location.pathname === "/admin/permissions" ? "active" : ""
-            }`}
+            className={`textMenu ${location.pathname === "/admin/permissions" ? "active" : ""
+              }`}
           >
             Phân quyền
           </span>
@@ -282,9 +292,8 @@ export default function SidebarAdmin({ toggleTheme }) {
       ),
       icon: (
         <UserSwitchOutlined
-          className={`custom-icon ${
-            location.pathname === "/admin/permissions" ? "active" : ""
-          }`}
+          className={`custom-icon ${location.pathname === "/admin/permissions" ? "active" : ""
+            }`}
         />
       ),
       key: "/admin/permissions",
@@ -296,9 +305,8 @@ export default function SidebarAdmin({ toggleTheme }) {
       label: (
         <Link to="/admin/accounts">
           <span
-            className={`textMenu ${
-              location.pathname === "/admin/accounts" ? "active" : ""
-            }`}
+            className={`textMenu ${location.pathname === "/admin/accounts" ? "active" : ""
+              }`}
           >
             Tài khoản
           </span>
@@ -306,9 +314,8 @@ export default function SidebarAdmin({ toggleTheme }) {
       ),
       icon: (
         <UsergroupAddOutlined
-          className={`custom-icon ${
-            location.pathname === "/admin/accounts" ? "active" : ""
-          }`}
+          className={`custom-icon ${location.pathname === "/admin/accounts" ? "active" : ""
+            }`}
         />
       ),
       key: "/admin/accounts",
@@ -340,9 +347,8 @@ export default function SidebarAdmin({ toggleTheme }) {
   return (
     <div>
       <div
-        className={`menuHome ${theme === "dark" ? "dark" : "light"} ${
-          collapsed ? "collapsed" : ""
-        }`}
+        className={`menuHome ${theme === "dark" ? "dark" : "light"} ${collapsed ? "collapsed" : ""
+          }`}
       >
         {/* Avatar Section */}
         <div className="avatar-container">
