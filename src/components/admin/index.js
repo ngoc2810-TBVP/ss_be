@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import { Row, Col } from 'antd';
-import { Outlet } from 'react-router-dom';
-import SidebarAdmin from './sidebar/sidebar';
-import './index.css';
+import React, { useEffect, useState } from "react";
+import { Row, Col } from "antd";
+import { Outlet } from "react-router-dom";
+import SidebarAdmin from "./sidebar/sidebar";
+import "./index.css";
 
 export default function Admin() {
-  var storedTheme = localStorage.getItem('mode');
+  var storedTheme = localStorage.getItem("mode");
   const [theme, setTheme] = useState(storedTheme);
 
   useEffect(() => {
-    storedTheme = localStorage.getItem('mode');
+    storedTheme = localStorage.getItem("mode");
     if (storedTheme) {
       setTheme(storedTheme);
     }
@@ -17,7 +17,7 @@ export default function Admin() {
 
   const toggleTheme = (newTheme) => {
     setTheme(newTheme);
-    localStorage.setItem('mode', newTheme);
+    localStorage.setItem("mode", newTheme);
   };
 
   return (
@@ -27,7 +27,7 @@ export default function Admin() {
           <SidebarAdmin toggleTheme={toggleTheme} />
         </Col>
         <Col span={19}>
-          <div className='ms-5 content-outlet'>
+          <div className="ms-5 content-outlet">
             <Outlet />
           </div>
         </Col>

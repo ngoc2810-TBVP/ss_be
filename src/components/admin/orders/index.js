@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Table, Button, Modal, Select, Tag, Typography, message } from "antd";
+import { Table, Button, Modal, Select, Tag, Typography, message, Row, Col } from "antd";
 import axiosToken from "../../context/axiosToken";
 import moment from "moment";
+import "./AdminOrders.css";
 
 const { Option } = Select;
 const { Text } = Typography;
@@ -19,7 +20,7 @@ function AdminOrders() {
     const fetchOrders = async () => {
       setLoading(true);
       try {
-        const res = await axiosToken.get(`${API}/orders`);
+        const res = await axiosToken.get(`${API}/order`);
         setOrders(res.data.orders || []);
       } catch (err) {
         setError(err.message);
@@ -29,8 +30,6 @@ function AdminOrders() {
     };
     fetchOrders();
   }, [API]);
-
-  console.log("orders: ", orders);
 
   const handleChangeStatus = (order) => {
     setSelectedOrder(order);
@@ -52,7 +51,6 @@ function AdminOrders() {
       setStatusModalVisible(false);
       message.success("Cập nhật trạng thái thành công!");
     } catch (err) {
-      console.error(err);
       message.error("Cập nhật thất bại!");
     } finally {
       setLoading(false);
@@ -148,21 +146,31 @@ function AdminOrders() {
   if (error) return <div>Lỗi: {error}</div>;
 
   return (
-    <div style={{ padding: 20 }}>
-      <h1>Quản lý đơn hàng</h1>
+    <div className="admin-orders-container">
+      <Row gutter={16}>
+        <Col span={24}>
+          <h1 className="admin-title">Quản lý đơn hàng</h1>
+        </Col>
+      </Row>
+
       <Table
         columns={columns}
         dataSource={orders.map((o) => ({ ...o, key: o._id }))}
         bordered
+        loading={loading}
+        pagination={{ pageSize: 10 }}
+        rowKey={(record) => record._id}
+        className="orders-table"
       />
 
       <Modal
         title="Cập nhật trạng thái đơn hàng"
-        open={statusModalVisible} // đổi từ visible => open theo Antd v5
+        open={statusModalVisible}
         onOk={handleUpdateStatus}
         onCancel={() => setStatusModalVisible(false)}
         okText="Cập nhật"
         cancelText="Hủy"
+        className="status-modal"
       >
         <Select
           value={newStatus}

@@ -1,11 +1,32 @@
+.all-home {
+  position: relative;
+  top: -182px;
+}
 
-.products__main-feature {
+.banner-home {
   position: relative;
   display: flex;
   flex-wrap: wrap;
   /* Ensure that the items wrap to the next line */
   gap: 35px;
   left: 5%;
+  margin-bottom: 30px;
+}
+
+.banner-home .banner-home--item img {
+  cursor: pointer;
+  width: 270px !important;
+  height: 191px;
+  border-radius: 20px !important;
+}
+
+.products__main-feature {
+  display: flex;
+  flex-wrap: wrap;
+  /* Ensure that the items wrap to the next line */
+  gap: 35px;
+  /* position: relative;
+  left: 5%; */
 }
 
 .products__main-feature .products__main--item {
@@ -14,7 +35,8 @@
   /* Set a fixed width for each product item */
   height: 356px;
   padding: 0;
-  box-shadow: 0 1px 2px 0 rgba(48, 50, 53, 0.1), 0 2px 6px 2px rgba(18, 20, 21, 0.15);
+  box-shadow: 0 1px 2px 0 rgba(48, 50, 53, 0.1),
+    0 2px 6px 2px rgba(18, 20, 21, 0.15);
   border-radius: 15px;
   margin-bottom: 35px;
   /* Add margin at the bottom to space out rows */
@@ -79,10 +101,6 @@
   border-bottom-left-radius: 19px;
 }
 
-.products__main-feature .badge2 {
-  margin-top: 27px;
-}
-
 .products__main-feature .image__product--main-badge {
   position: absolute;
   left: 20px;
@@ -109,6 +127,7 @@
 }
 
 .products__main-feature .titleVPrice .priceDiscount-badge {
+  margin-right: 175px !important;
   color: red;
 }
 
@@ -167,4 +186,189 @@
     right: 5px;
     font-size: 11px;
   }
+}
+
+.categories_title {
+  display: flex;
+  font-size: 14px !important;
+}
+
+/* NÚT BẤM TRÁI PHẢI */
+.samsung-slider-full .slick-prev,
+.samsung-slider-full .slick-next {
+  width: 48px;
+  height: 48px;
+  z-index: 10;
+}
+
+.samsung-slider-full .slick-prev:before,
+.samsung-slider-full .slick-next:before {
+  font-size: 36px;
+  opacity: 0.8;
+  color: #333;
+}
+
+.samsung-slider-full .slick-prev:hover:before,
+.samsung-slider-full .slick-next:hover:before {
+  color: #000;
+  opacity: 1;
+}
+
+/* DOTS PHÍA DƯỚI */
+.samsung-slider-full .slick-dots li button:before {
+  font-size: 12px;
+  color: #fff !important;
+  opacity: 0.6;
+}
+
+.samsung-slider-full .slick-dots li.slick-active button:before {
+  opacity: 1;
+  color: #fff !important;
+}
+
+/* Tên danh mục sản phẩm */
+.categories_title {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* Thêm kiểu dáng cho từng danh mục */
+.categories_title li {
+  padding: 10px 20px;
+  background-color: #ff7b00;
+  color: white;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.categories_title li:hover {
+  background-color: #e67e22;
+}
+
+/* Các sản phẩm trong từng danh mục */
+.category {
+  margin-bottom: 40px;
+  position: relative;
+  left: 5%;
+}
+
+.products__main-feature {
+  display: grid;
+  grid-template-columns: repeat(
+    4,
+    1fr
+  ); /* Đảm bảo có 4 sản phẩm trong mỗi hàng */
+  gap: 20px;
+}
+
+.products__main--item {
+  position: relative;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  text-align: center;
+  background-color: #fff;
+  transition: transform 0.3s ease;
+}
+
+.products__main--item:hover {
+  transform: scale(1.05);
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.image__product--main-badge {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+.titleVPrice {
+  margin-top: 10px;
+}
+
+.title-badge {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.price-badge {
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+.priceDiscount-badge {
+  color: red;
+}
+
+.priceOriginal-badge {
+  text-decoration: line-through;
+  color: #999;
+}
+
+/* Thêm margin dưới mỗi sản phẩm */
+.products__main--item {
+  margin-bottom: 20px;
+}
+
+/* Thêm hiệu ứng cho badge */
+.badge {
+  position: absolute;
+  top: 10px;
+  width: 25%;
+  left: 10px;
+  z-index: 1;
+}
+
+.badge2 {
+  position: absolute;
+  width: 25%;
+  margin-top: 22px;
+  bottom: 10px;
+  left: 10px;
+  z-index: 1;
+}
+
+.span-cate {
+  margin-bottom: 35px;
+}
+
+.parent-all {
+  background-color: #ff5722 !important; /* Nền cam đậm */
+  border-radius: 8px;
+  color: white;
+  padding: 10px 25px;
+  font-size: 20px;
+  font-weight: bold;
+  width: 100%;
+  height: auto;
+}
+
+/* Dành cho các mục con có class "subcategory" */
+.subcategory {
+  padding: 10px 15px;
+  margin-bottom: 10px;
+  font-size: 15px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+/* Hiệu ứng hover cho các mục con */
+.subcategory:hover {
+  border-radius: 8px;
+  background-color: #ff9800; /* Nền cam nhạt khi hover */
+  color: white; /* Chữ trắng khi hover */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Hiệu ứng đổ bóng */
+}
+
+/* CSS cho danh mục con khi không có mục */
+.subCategories {
+  display: flex;
+  flex-wrap: wrap; /* Để các mục con hiển thị gọn gàng */
+  gap: 10px;
 }

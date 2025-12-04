@@ -114,16 +114,19 @@
 .header-logo-search {
   position: relative;
   left: 50px;
+  width: 94%;
   display: flex;
-  /* justify-content: space-between; */
+  justify-content: space-between;
   align-items: center;
   padding: 15px;
   background-color: #fff;
 }
 
 .header-logo img {
-  width: 100%;
-  height: 80px;
+  width: 161px !important;
+  object-fit: cover;
+  height: auto;
+  max-width: 100%;
 }
 
 /* Phần thông tin hotline, cấu hình PC và giỏ hàng */
@@ -135,13 +138,12 @@
 
 .header-info-item {
   display: flex;
+  margin-right: 20px;
   align-items: center;
-  color: #333 !important;
 }
 
 .header-info-item span {
   font-size: 16px;
-  color: #333 !important;
   margin-left: 8px;
 }
 
@@ -151,16 +153,107 @@
   border-radius: 20px;
 }
 
-/* Menu */
-.header-menu {
-  padding: 10px;
+.header-login {
+  position: relative;
+  /* display: flex; */
+  width: 100% !important;
   background-color: #ff7b00;
 }
 
+.header-user {
+  position: absolute;
+  right: 30px;
+  top: 0;
+  padding: 10px;
+}
+
+/* Menu */
+.header-menu-1 {
+  position: relative;
+  padding: 10px;
+}
+
+/* Thay đổi giao diện của Menu */
+.header-menu-1 .ant-menu {
+  background-color: #ff7b00; /* Nền của menu */
+  border: none; /* Bỏ viền của menu */
+  border-radius: 0px; /* Bo tròn các góc của menu */
+}
+
+/* Kiểu dáng cho các item menu */
+.header-menu-1 a {
+  font-size: 16px; /* Kích thước chữ */
+  color: white !important; /* Màu chữ của item */
+}
+
+/* Hover cho các item menu */
+.header-menu-1 li:hover {
+  background: orangered !important; /* Màu nền khi hover */
+}
+
+.header-menu-1 a:hover {
+  background-color: none !important; /* Màu nền khi hover */
+  color: none !important; /* Màu chữ khi hover */
+  border-radius: 5px; /* Bo tròn góc khi hover */
+  transition: all 0.3s ease; /* Hiệu ứng mượt khi hover */
+}
+
+/* Item được chọn (active) */
+.header-menu-1 .ant-menu-item-selected {
+  background-color: #ff7b00; /* Nền khi item được chọn */
+  color: white; /* Màu chữ khi item được chọn */
+  font-weight: bold; /* Chữ in đậm khi item được chọn */
+}
+
+/* Các menu con trong menu chính */
+.header-menu-1 .ant-menu-submenu-title {
+  font-size: 16px;
+  color: white !important;
+}
+
+/* Kiểu dáng cho các menu con khi hover */
+.header-menu-1 .ant-menu-submenu-title:hover {
+  color: #ff7b00; /* Màu khi hover */
+}
+
+/* Kiểu dáng cho các item trong menu con */
+.header-menu-1 .ant-menu-item {
+  font-size: 14px;
+  color: #ff7b00;
+  line-height: 1.5;
+  padding: 10px;
+}
+
+.header-menu-1 .ant-menu-item:hover {
+  background-color: #ff4d4f;
+  color: white;
+}
+
+.header-menu-1 .ant-menu-item .ant-menu-submenu {
+  position: absolute;
+  top: 100%; /* Đặt submenu ngay dưới mục cha */
+  left: 0;
+  background-color: #fff !important;
+  border-radius: 5px;
+  z-index: 1000; /* Đảm bảo submenu luôn hiển thị trên menu chính */
+}
+
+/* Hiển thị submenu khi hover vào item cha */
+.header-menu-1 .ant-menu-item:hover .ant-menu-submenu-horizontal {
+  display: none !important; /* Hiển thị submenu khi hover vào menu chính */
+}
+
+.icon-header {
+  color: #ff7b00 !important;
+  font-size: 14px !important;
+}
+
 .menuClient {
+  /* position: absolute; */
+  margin-left: 40px;
   display: flex;
-  justify-content: center;
   gap: 20px;
+  color: #fff !important;
 }
 
 .menuClient .ant-menu-item {
@@ -172,11 +265,6 @@
 }
 
 /* Avatar & Login */
-.header-user {
-  display: flex;
-  justify-content: flex-end;
-  padding: 10px;
-}
 
 .btn-loginClient {
   background-color: #ff4d4f;
@@ -199,4 +287,29 @@
 
 .btn-avtuser {
   padding: 0 20px;
+}
+
+/* SLIDER FULL WIDTH */
+.samsung-slider-full {
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto 24px auto;
+  position: relative;
+}
+
+/* TỪNG SLIDE */
+.samsung-slide-full {
+  width: 100%;
+  height: auto;
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  background: #ffffff;
+}
+
+.samsung-slide-full img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  display: block;
 }

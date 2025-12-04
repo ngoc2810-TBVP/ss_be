@@ -1,10 +1,30 @@
-import React, { useEffect, useState } from 'react';
-import { Button, Input, message } from 'antd';
-import { useNavigate, useParams } from 'react-router-dom';
-import io from 'socket.io-client';
+import React, { useEffect, useState } from "react";
+import {
+  Button,
+  Input,
+  message,
+  Card,
+  Divider,
+  Typography,
+  Space,
+  Tag,
+  Row,
+  Col,
+} from "antd";
+import { useParams } from "react-router-dom";
+import io from "socket.io-client";
+import {
+  CheckCircleOutlined,
+  PhoneOutlined,
+  TruckOutlined,
+  SafetyCertificateOutlined,
+  ShopOutlined,
+} from "@ant-design/icons";
 import "./detail.css";
-import priceNewProduct from '../helper/priceNew';
-import Cookies from "js-cookie"; // nhớ import thư viện
+import priceNewProduct from "../helper/priceNew";
+import Cookies from "js-cookie";
+
+const { Title, Text } = Typography;
 
 function DetailProductClient() {
   const API = process.env.REACT_APP_API_URL_CLIENT;
@@ -12,25 +32,19 @@ function DetailProductClient() {
 
   const { slug } = useParams();
   const [product, setProduct] = useState({});
-  const navigate = useNavigate();
+  const [category, setCategory] = useState("");
   const [loading, setLoading] = useState(true);
   const [phoneNumber, setPhoneNumber] = useState("");
   const [socket, setSocket] = useState(null);
-  const [quantity, setQuantity] = useState(1); // thêm state số lượng
+  const [quantity, setQuantity] = useState(1);
 
   useEffect(() => {
-    // Kết nối đến server qua cổng 8080
     const socketInstance = io("http://localhost:8080", {
-      transports: ['websocket', 'polling'],
-      path: '/socket.io',
+      transports: ["websocket", "polling"],
+      path: "/socket.io",
     });
-
-    socketInstance.on("connect", () => {
-      console.log("Connected to server:", socketInstance._id);
-    });
-
     setSocket(socketInstance);
-  }, [API]);
+  }, []);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -39,81 +53,65 @@ function DetailProductClient() {
         const json = await res.json();
 
         if (json.data) {
-          setProduct(json.data);
+          setProduct(json.data.product);
+          setCategory(json.data.category);
           document.title = json.pageTitle;
         }
       } catch (error) {
-        message.error(error.message); // Hiển thị lỗi nếu có
+        message.error(error.message);
       } finally {
         setLoading(false);
       }
     };
-
     fetchProduct();
   }, [API, slug]);
 
   const formatCurrency = (number) => {
-    if (number) {
-      return `${number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}₫`;
-    }
-    return "";
+    if (!number) return "";
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + "₫";
   };
 
   const handleOrderClick = async () => {
-    if (!phoneNumber) {
-      return;
-    }
+    if (!phoneNumber) return message.error("Vui lòng nhập số điện thoại!");
 
     const orderData = {
       product: product.title,
-      phoneNumber: phoneNumber,
+      phoneNumber,
       type: "quickOrder",
     };
 
     socket.emit("order", orderData);
 
     try {
-      const response = await fetch(`${API_ADMIN}/notifications/postQuickOrder`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(orderData),
-      });
+      const response = await fetch(
+        `${API_ADMIN}/notifications/postQuickOrder`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(orderData),
+        }
+      );
 
       const result = await response.json();
-      console.log('result: ', result);
-
-      if (result.code === 200) {
-        message.success("Đặt hàng thành công!");
-      } else {
-        message.error(result.message || "Đặt hàng thất bại!");
-      }
+      if (result.code === 200) message.success("Đặt hàng thành công!");
+      else message.error(result.message);
     } catch (error) {
       message.error("Lỗi khi gửi yêu cầu đặt hàng!");
-      console.log("Error:", error);
     }
   };
+
   const handleAddToCart = async () => {
-    if (quantity < 1) {
-      message.warning("Vui lòng nhập số lượng hợp lệ!");
-      return;
-    }
+    if (quantity < 1) return message.error("Số lượng không hợp lệ!");
+
+    const token = Cookies.get("token");
+    if (!token) return message.error("Bạn phải đăng nhập!");
 
     try {
-      // Lấy token từ cookies
-      const token = Cookies.get("token");
-      if (!token) {
-        message.error("Vui lòng đăng nhập để thêm sản phẩm vào giỏ hàng!");
-        return;
-      }
-
-      console.log(product._id + "===" + quantity)
       const response = await fetch(`${API}/cart/add`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`, // gửi token để xác thực
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
           product_id: product._id,
@@ -122,63 +120,172 @@ function DetailProductClient() {
       });
 
       const result = await response.json();
-
-      if (result.status === "success") {
+      if (result.status === "success")
         message.success(`Đã thêm ${quantity} sản phẩm vào giỏ hàng!`);
-      } else {
-        message.error(result.message || "Thêm vào giỏ hàng thất bại!");
-      }
+      else message.error(result.message);
     } catch (error) {
-      console.error(error);
-      message.error("Có lỗi khi thêm sản phẩm vào giỏ hàng!");
+      message.error("Có lỗi khi thêm giỏ hàng!");
     }
   };
+
   return (
-    <div>
-      {loading ? (
-        <p>Loading...</p>
-      ) : (
-        <div className='product__content'>
-          <div className='product__content--image'>
-            <img src={product.thumbnail} alt={product.title} />
+    <div className="detail-page">
+      {/* 🔥 TITLE */}
+      <div className="breadcrumb">
+        <span className="abc" style={{ cursor: "pointer" }}>
+          Trang chủ
+        </span>
+        <span> / </span>
+        <span className="abc" style={{ cursor: "pointer" }}>
+          {category}
+        </span>
+      </div>
+
+      <Title level={2} className="product-main-title">
+        {product.title}
+      </Title>
+
+      <Divider />
+
+      <div className="detail-layout">
+        {/* LEFT IMAGE */}
+        <div className="image-card" hoverable>
+          <img
+            src={product.thumbnail}
+            alt={product.title}
+            className="product-image"
+          />
+        </div>
+
+        {/* CENTER - PRICE & ORDER */}
+        <Card className="center-card" bordered>
+          <Title level={4}>Thông tin sản phẩm</Title>
+
+          <div className="price-block">
+            <Space direction="vertical" size={5} style={{ width: "100%" }}>
+              <Row gutter={16}>
+                <Col span={8}>
+                  <Text>Giá gốc:</Text>
+                </Col>
+                <Col span={16}>
+                  <Text delete type="secondary" style={{ fontSize: 16 }}>
+                    {formatCurrency(product.price)}
+                  </Text>
+                </Col>
+              </Row>
+
+              <Row gutter={16}>
+                <Col span={8}>
+                  <Text style={{ fontSize: 14 }}>Giá khuyến mại:</Text>
+                </Col>
+                <Col span={16}>
+                  <Text strong style={{ fontSize: 20, color: "red" }}>
+                    {formatCurrency(priceNewProduct(product))}
+                  </Text>
+                </Col>
+              </Row>
+            </Space>
+
+            <Tag color="green" style={{ marginTop: 10 }}>
+              Còn {product.stock} sản phẩm
+            </Tag>
           </div>
 
-          <div className='product__content--price'>
-            <h2 className='product__content--name'>{product.title}</h2>
-            <span>Giá ưu đãi: {formatCurrency(priceNewProduct(product))}</span>
-            <div className='orderProduct'>
-              <div className="order-form mt-4">
-                <Input
-                  type="text"
-                  value={phoneNumber}
-                  onChange={(e) => setPhoneNumber(e.target.value)}
-                  className="phone-input"
-                  placeholder="Nhập số điện thoại"
-                  required
-                />
-                <Button type="primary" className="order-button" onClick={handleOrderClick}>
-                  Đặt hàng nhanh
-                </Button>
-              </div>
-              {/* Thêm phần nhập số lượng và thêm vào giỏ hàng */}
-              <div className="add-to-cart mt-3">
-                <Input
-                  type="number"
-                  min={1}
-                  value={quantity}
-                  onChange={(e) => setQuantity(parseInt(e.target.value))}
-                  className="quantity-input"
-                  placeholder="Số lượng"
-                />
-                <Button type="default" className="add-cart-button" onClick={handleAddToCart}>
-                  Thêm vào giỏ hàng
-                </Button>
-              </div>
+          <Divider />
+
+          {/* ORDER FORM */}
+          <Space direction="vertical" style={{ width: "100%" }} size={12}>
+            <Space align="center">
+              <Input
+                type="number"
+                min={1}
+                value={quantity}
+                onChange={(e) => setQuantity(parseInt(e.target.value))}
+                style={{ width: 80 }}
+              />
+              <Button size="large" type="primary" onClick={handleAddToCart}>
+                Thêm vào giỏ hàng
+              </Button>
+            </Space>
+          </Space>
+
+          <div>
+            <div style={{ marginTop: "45px" }}>
+              <b>Để lại số điện thoại, chúng tôi sẽ tư vấn cho Quý khách!</b>
+              <Input
+                size="large"
+                placeholder="Nhập số điện thoại để đặt hàng nhanh"
+                value={phoneNumber}
+                onChange={(e) => setPhoneNumber(e.target.value)}
+              />
+
+              <Button
+                style={{
+                  marginTop: "20px",
+                  width: "200px",
+                  marginLeft: "80px",
+                }}
+                size="large"
+                type="primary"
+                danger
+                block
+                onClick={handleOrderClick}
+              >
+                ĐẶT HÀNG NGAY
+              </Button>
             </div>
           </div>
+        </Card>
 
-        </div>
-      )}
+        {/* RIGHT SHOP INFO */}
+        <Card className="right-card" title="YÊN TÂM MUA HÀNG" bordered>
+          <Space direction="vertical" size={10}>
+            <Text>
+              <CheckCircleOutlined style={{ color: "green" }} /> Hàng chính hãng
+              100%
+            </Text>
+            <Text>
+              <SafetyCertificateOutlined style={{ color: "#1677ff" }} /> Bảo
+              hành tận nơi
+            </Text>
+            <Text>
+              <CheckCircleOutlined style={{ color: "orange" }} /> 1 đổi 1 trong
+              30 ngày
+            </Text>
+            <Text>
+              <ShopOutlined style={{ color: "purple" }} /> Giá rẻ hơn cửa hàng
+              khác
+            </Text>
+          </Space>
+
+          <Divider />
+
+          <Title level={5}>HOTLINE</Title>
+          <Space direction="vertical">
+            <Text>
+              <PhoneOutlined /> Hà Nội: 0912.074.444
+            </Text>
+            <Text>
+              <PhoneOutlined /> HCM: 0966.666.308
+            </Text>
+            <Text>
+              <PhoneOutlined /> Bảo hành: 0888.129.444
+            </Text>
+          </Space>
+
+          <Divider />
+
+          <Title level={5}>GIAO HÀNG</Title>
+          <Space direction="vertical">
+            <Text>
+              <TruckOutlined /> Giao nhanh Grab trong 2h
+            </Text>
+            <Text>
+              <TruckOutlined /> Ship toàn quốc COD
+            </Text>
+          </Space>
+        </Card>
+      </div>
     </div>
   );
 }

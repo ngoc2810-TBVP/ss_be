@@ -18,6 +18,7 @@ function AdminProducts({ permissions }) {
     const fetchProducts = async () => {
       try {
         const res = await axiosToken.get(`${API}/products`);
+        
         if (res.data.products && res.data.products.length > 0) {
           setProducts(res.data.products);
         }

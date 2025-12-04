@@ -23,14 +23,17 @@ function ClientProductsInCategory({ permissions, permission }) {
 
         document.title = json.pageTitle;
 
-        console.log("res: ", json);
+        // Kiểm tra xem dữ liệu trả về có đúng dạng mảng không
         if (json.code == 400) {
           setProducts([]);
           console.log("prd: ", products);
         } else {
-          if (json.data != []) {
+          if (Array.isArray(json.data)) {
+            // Kiểm tra là mảng
             setProducts(priceNewProducts(json.data));
             console.log("prd: ", products);
+          } else {
+            setProducts([]); // Nếu không phải mảng, đặt giá trị mặc định là mảng trống
           }
         }
       } catch (error) {
@@ -61,7 +64,7 @@ function ClientProductsInCategory({ permissions, permission }) {
   return (
     <>
       <div>
-        {products.length > 0 ? (
+        {Array.isArray(products) && products.length > 0 ? ( // Kiểm tra trước khi render
           <div className="products__main">
             {products.map(
               (item) =>
