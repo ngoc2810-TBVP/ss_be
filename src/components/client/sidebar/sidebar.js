@@ -200,7 +200,7 @@ export default function HeaderComponent() {
             <div className="header-info-item">
               <DesktopOutlined style={{ fontSize: "24px", color: "#ff7b00" }} />
               <span style={{ marginLeft: "8px", fontSize: "16px" }}>
-                T <br />
+                Xây dựng <br />
                 <b>Cấu hình PC</b>
               </span>
             </div>

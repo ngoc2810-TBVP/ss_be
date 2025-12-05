@@ -370,6 +370,6 @@
 /* CSS cho danh mục con khi không có mục */
 .subCategories {
   display: flex;
-  flex-wrap: wrap; /* Để các mục con hiển thị gọn gàng */
+  flex-wrap: wrap;
   gap: 10px;
 }
