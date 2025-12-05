@@ -56,7 +56,7 @@ function HomeClient({ permissions, permission }) {
     <>
       <div className="all-home">
         <div className="">
-          {/* <Carousel
+          <Carousel
             className="samsung-slider-full"
             autoplay
             autoplaySpeed={3000}
@@ -84,7 +84,7 @@ function HomeClient({ permissions, permission }) {
                 alt="Samsung Slide 3"
               />
             </div>
-          </Carousel> */}
+          </Carousel>
         </div>
 
         {/* Hiển thị các danh mục và sản phẩm */}
@@ -139,7 +139,7 @@ function HomeClient({ permissions, permission }) {
                             />
                             <Badge.Ribbon
                               className="badge badge2"
-                              text={`Giảm ${item.discountPercentage}%`}
+                              text={`Giảm ${item?.discountPercentage}%`}
                               color="red"
                             >
                               <img

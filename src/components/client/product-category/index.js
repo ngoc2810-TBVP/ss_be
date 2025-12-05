@@ -75,7 +75,7 @@ function ClientProductsInCategory({ permissions, permission }) {
                   >
                     <Badge.Ribbon
                       className="badge"
-                      text={`Giảm ${item.discountPercentage}%`}
+                      text={`Giảm ${item?.discountPercentage}%`}
                       color="red"
                     >
                       <img

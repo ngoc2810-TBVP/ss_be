@@ -117,7 +117,7 @@ function CartClient() {
           <div className="cart-product-info">
             <div className="cart-product-title">{record.product_id?.title}</div>
             <div className="cart-product-price">
-              {record.product_id?.price.toLocaleString("vi-VN")}₫
+              {record.product_id?.price?.toLocaleString("vi-VN")}₫
             </div>
           </div>
         </div>
@@ -138,7 +138,7 @@ function CartClient() {
           />
           <span className="cart-product-total">
             <b>
-              {(record.product_id?.price * quantity).toLocaleString("vi-VN")}₫
+              {(record.product_id?.price * quantity)?.toLocaleString("vi-VN")}₫
             </b>
           </span>
         </div>
@@ -196,7 +196,7 @@ function CartClient() {
           </div>
 
           <div className="cart-total">
-            <h3>Tổng tiền: {calculateTotal().toLocaleString("vi-VN")}₫</h3>
+            <h3>Tổng tiền: {calculateTotal()?.toLocaleString("vi-VN")}₫</h3>
           </div>
         </>
       ) : (
