@@ -12,7 +12,7 @@ function HomeClient({ permissions, permission }) {
   const { slug } = useParams();
   const navigate = useNavigate();
 
-  document.title = "Website SamSung";
+  document.title = "Website Garage";
 
   // Lấy danh mục và sản phẩm từ API
   useEffect(() => {
@@ -56,7 +56,7 @@ function HomeClient({ permissions, permission }) {
     <>
       <div className="all-home">
         <div className="">
-          <Carousel
+          {/* <Carousel
             className="samsung-slider-full"
             autoplay
             autoplaySpeed={3000}
@@ -84,7 +84,7 @@ function HomeClient({ permissions, permission }) {
                 alt="Samsung Slide 3"
               />
             </div>
-          </Carousel>
+          </Carousel> */}
         </div>
 
         {/* Hiển thị các danh mục và sản phẩm */}

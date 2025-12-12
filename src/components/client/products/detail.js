@@ -52,6 +52,8 @@ function DetailProductClient() {
         const res = await fetch(`${API}/products/${slug}`);
         const json = await res.json();
 
+        console.log("json: ", json);
+
         if (json.data) {
           setProduct(json.data.product);
           setCategory(json.data.category);
@@ -106,6 +108,8 @@ function DetailProductClient() {
     const token = Cookies.get("token");
     if (!token) return message.error("Bạn phải đăng nhập!");
 
+    console.log("product_id: ", product._id);
+
     try {
       const response = await fetch(`${API}/cart/add`, {
         method: "POST",
@@ -115,6 +119,7 @@ function DetailProductClient() {
         },
         body: JSON.stringify({
           product_id: product._id,
+          slug: product.slug,
           quantity,
         }),
       });
