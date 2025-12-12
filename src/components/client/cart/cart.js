@@ -3,6 +3,7 @@ import { Button, InputNumber, message, Popconfirm, Table } from "antd";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 import "./CartClient.css";
+import axios from "axios";
 
 const API = process.env.REACT_APP_API_URL_CLIENT;
 
@@ -16,16 +17,23 @@ function CartClient() {
     if (!token) return message.error("Vui lòng đăng nhập để xem giỏ hàng!");
 
     try {
-      setLoading(true);
-      const res = await fetch(`${API}/cart`, {
-        headers: { Authorization: `Bearer ${token}` },
+      const res = await axios.get(`${API}/cart`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
-      const data = await res.json();
 
-      if (data.status === "success") setCart(data.cart);
-      else message.error(data.message || "Lấy giỏ hàng thất bại!");
+      const data = res;
+
+      console.log("data: ", data);
+
+      if (data.data.status === "success") {
+        setCart(data.data.cart);
+
+        console.log("cart: ", cart);
+      } else message.error(data.message || "Lấy giỏ hàng thất bại!");
     } catch (err) {
-      console.error(err);
+      console.error("err: ", err);
       message.error("Có lỗi khi lấy giỏ hàng!");
     } finally {
       setLoading(false);

@@ -11,6 +11,7 @@ import {
   Row,
   Col,
 } from "antd";
+import axios from "axios";
 import { useParams } from "react-router-dom";
 import io from "socket.io-client";
 import {
@@ -111,24 +112,36 @@ function DetailProductClient() {
     console.log("product_id: ", product._id);
 
     try {
-      const response = await fetch(`${API}/cart/add`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          product_id: product._id,
-          slug: product.slug,
-          quantity,
-        }),
-      });
+      // const response = await fetch(`${API}/cart/add`, {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //     Authorization: `Bearer ${token}`,
+      //   },
+      //   body: JSON.stringify({
+      //     product_id: product._id,
+      //     slug: product.slug,
+      //     quantity,
+      //   }),
+      // });
 
-      const result = await response.json();
-      if (result.status === "success")
+      const response = await axios.post(
+        `${API}/cart/add`,
+        {
+          product_id: product._id,
+          quantity,
+        },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      const result = response;
+
+      console.log("result: ", result);
+      if (result.data.status === "success")
         message.success(`Đã thêm ${quantity} sản phẩm vào giỏ hàng!`);
       else message.error(result.message);
     } catch (error) {
+      console.log("error: ", error);
       message.error("Có lỗi khi thêm giỏ hàng!");
     }
   };
