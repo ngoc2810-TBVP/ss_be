@@ -84,17 +84,17 @@ function App() {
             />
 
             <Route
-              path="roles"
+              path="permissions"
               element={
-                <PermissionMiddleware permission="roles_view">
+                <PermissionMiddleware permission="permissions_view">
                   <AdminPermissions />
                 </PermissionMiddleware>
               }
             />
             <Route
-              path="roles/edit/:id"
+              path="permissions/edit/:id"
               element={
-                <PermissionMiddleware permission="roles_update">
+                <PermissionMiddleware permission="permissions_update">
                   <EditRole />
                 </PermissionMiddleware>
               }
@@ -103,7 +103,7 @@ function App() {
             <Route
               path="orders"
               element={
-                <PermissionMiddleware permission="roles_view">
+                <PermissionMiddleware permission="orders_view">
                   <AdminOrders />
                 </PermissionMiddleware>
               }
@@ -155,7 +155,6 @@ function App() {
           <Route path="/:slug" element={<DetailProductClient />} />
           <Route path="/cart" element={<CartClient />} />
           <Route path="/checkout" element={<CheckoutClient />} />
-
         </Route>
         <Route path={`/error404`} element={<Error404 />} />
       </Routes>

@@ -55,11 +55,9 @@ function DetailProductClient() {
 
         console.log("json: ", json);
 
-        if (json.data) {
-          setProduct(json.data.product);
-          setCategory(json.data.category);
-          document.title = json.pageTitle;
-        }
+        setProduct(json.data.product);
+        setCategory(json.data.category);
+        document.title = json.pageTitle;
       } catch (error) {
         message.error(error.message);
       } finally {
@@ -112,34 +110,22 @@ function DetailProductClient() {
     console.log("product_id: ", product._id);
 
     try {
-      // const response = await fetch(`${API}/cart/add`, {
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //     Authorization: `Bearer ${token}`,
-      //   },
-      //   body: JSON.stringify({
-      //     product_id: product._id,
-      //     slug: product.slug,
-      //     quantity,
-      //   }),
-      // });
-
-      const response = await axios.post(
-        `${API}/cart/add`,
-        {
-          product_id: product._id,
-          quantity,
+      const response = await fetch(`${API}/cart/add`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-
-      const result = response;
+        body: JSON.stringify({
+          product_id: product._id,
+          slug: product.slug,
+          quantity,
+        }),
+      });
+      const result = await response.json();
 
       console.log("result: ", result);
-      if (result.data.status === "success")
-        message.success(`Đã thêm ${quantity} sản phẩm vào giỏ hàng!`);
-      else message.error(result.message);
+      message.success(`Đã thêm ${quantity} sản phẩm vào giỏ hàng!`);
     } catch (error) {
       console.log("error: ", error);
       message.error("Có lỗi khi thêm giỏ hàng!");

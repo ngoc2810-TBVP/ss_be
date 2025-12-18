@@ -17,21 +17,19 @@ function CartClient() {
     if (!token) return message.error("Vui lòng đăng nhập để xem giỏ hàng!");
 
     try {
-      const res = await axios.get(`${API}/cart`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+      const respone = await fetch(`${API}/cart`, {
+        method: "get",
+        headers: { Authorization: `Bearer ${token}` },
       });
 
-      const data = res;
+      const res = await respone.json();
 
-      console.log("data: ", data);
+      console.log("data: ", res);
 
-      if (data.data.status === "success") {
-        setCart(data.data.cart);
-
-        console.log("cart: ", cart);
-      } else message.error(data.message || "Lấy giỏ hàng thất bại!");
+      if (res.status == "success") {
+        setCart(res.cart);
+      }
+      console.log("cart: ", cart);
     } catch (err) {
       console.error("err: ", err);
       message.error("Có lỗi khi lấy giỏ hàng!");

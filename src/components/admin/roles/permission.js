@@ -10,7 +10,7 @@ const AdminPermissions = () => {
   useEffect(() => {
     const fetchPermissions = async () => {
       try {
-        const res = await axiosToken.get(`${API}/roles._id`);
+        const res = await axiosToken.get(`${API}/roles/permissions`);
         console.log("API Response: ", res.data);
 
         if (res.data.roles) {
@@ -68,7 +68,7 @@ const AdminPermissions = () => {
 
     const payload = {
       permissions: permissions.map((item) => ({
-        _id: item._id, // hoặc item._id nếu bạn sử dụng thuộc tính đó
+        _id: item.id, // hoặc item._id nếu bạn sử dụng thuộc tính đó
         permissions: item.permissions,
       })),
     };
@@ -77,7 +77,7 @@ const AdminPermissions = () => {
 
     try {
       const res = await axiosToken.patch(
-        `${API}/roles._id/update`,
+        `${API}/roles/permissions/update`,
         permissions
       );
       console.log("Update response:", res.data);
@@ -121,7 +121,7 @@ const AdminPermissions = () => {
                 <tr>
                   <td>Xem</td>
                   {permissions.map((item) => (
-                    <td className="text-center" key={item._id}>
+                    <td className="text-center" key={item.id}>
                       <input
                         type="checkbox"
                         checked={
@@ -139,7 +139,7 @@ const AdminPermissions = () => {
                 <tr>
                   <td>Thêm</td>
                   {permissions.map((item) => (
-                    <td className="text-center" key={item._id}>
+                    <td className="text-center" key={item.id}>
                       <input
                         type="checkbox"
                         checked={item.permissions.includes(
@@ -156,7 +156,7 @@ const AdminPermissions = () => {
                 <tr>
                   <td>Sửa</td>
                   {permissions.map((item) => (
-                    <td className="text-center" key={item._id}>
+                    <td className="text-center" key={item.id}>
                       <input
                         type="checkbox"
                         checked={
@@ -174,7 +174,7 @@ const AdminPermissions = () => {
                 <tr>
                   <td>Xóa</td>
                   {permissions.map((item) => (
-                    <td className="text-center" key={item._id}>
+                    <td className="text-center" key={item.id}>
                       <input
                         type="checkbox"
                         checked={
@@ -199,7 +199,7 @@ const AdminPermissions = () => {
                 <tr>
                   <td>Xem</td>
                   {permissions.map((item) => (
-                    <td className="text-center" key={item._id}>
+                    <td className="text-center" key={item.id}>
                       <input
                         type="checkbox"
                         checked={
@@ -216,7 +216,7 @@ const AdminPermissions = () => {
                 <tr>
                   <td>Thêm</td>
                   {permissions.map((item) => (
-                    <td className="text-center" key={item._id}>
+                    <td className="text-center" key={item.id}>
                       <input
                         type="checkbox"
                         checked={item.permissions.includes(
@@ -233,7 +233,7 @@ const AdminPermissions = () => {
                 <tr>
                   <td>Sửa</td>
                   {permissions.map((item) => (
-                    <td className="text-center" key={item._id}>
+                    <td className="text-center" key={item.id}>
                       <input
                         type="checkbox"
                         checked={
@@ -250,7 +250,7 @@ const AdminPermissions = () => {
                 <tr>
                   <td>Xóa</td>
                   {permissions.map((item) => (
-                    <td className="text-center" key={item._id}>
+                    <td className="text-center" key={item.id}>
                       <input
                         type="checkbox"
                         checked={
@@ -268,7 +268,7 @@ const AdminPermissions = () => {
                 <tr>
                   <td>Thùng rác</td>
                   {permissions.map((item) => (
-                    <td className="text-center" key={item._id}>
+                    <td className="text-center" key={item.id}>
                       <input
                         type="checkbox"
                         checked={
@@ -292,7 +292,7 @@ const AdminPermissions = () => {
                 <tr>
                   <td>Xem</td>
                   {permissions.map((item) => (
-                    <td className="text-center" key={item._id}>
+                    <td className="text-center" key={item.id}>
                       <input
                         type="checkbox"
                         checked={
@@ -306,7 +306,7 @@ const AdminPermissions = () => {
                 <tr>
                   <td>Thêm</td>
                   {permissions.map((item) => (
-                    <td className="text-center" key={item._id}>
+                    <td className="text-center" key={item.id}>
                       <input
                         type="checkbox"
                         checked={item.permissions.includes(
@@ -323,7 +323,7 @@ const AdminPermissions = () => {
                 <tr>
                   <td>Sửa</td>
                   {permissions.map((item) => (
-                    <td className="text-center" key={item._id}>
+                    <td className="text-center" key={item.id}>
                       <input
                         type="checkbox"
                         checked={
@@ -337,7 +337,7 @@ const AdminPermissions = () => {
                 <tr>
                   <td>Xóa</td>
                   {permissions.map((item) => (
-                    <td className="text-center" key={item._id}>
+                    <td className="text-center" key={item.id}>
                       <input
                         type="checkbox"
                         checked={
@@ -355,7 +355,7 @@ const AdminPermissions = () => {
                 <tr>
                   <td>Phân quyền</td>
                   {permissions.map((item) => (
-                    <td className="text-center" key={item._id}>
+                    <td className="text-center" key={item.id}>
                       <input
                         type="checkbox"
                         checked={
@@ -379,7 +379,7 @@ const AdminPermissions = () => {
                 <tr>
                   <td>Xem</td>
                   {permissions.map((item) => (
-                    <td className="text-center" key={item._id}>
+                    <td className="text-center" key={item.id}>
                       <input
                         type="checkbox"
                         checked={
@@ -396,7 +396,7 @@ const AdminPermissions = () => {
                 <tr>
                   <td>Thêm</td>
                   {permissions.map((item) => (
-                    <td className="text-center" key={item._id}>
+                    <td className="text-center" key={item.id}>
                       <input
                         type="checkbox"
                         checked={item.permissions.includes(
@@ -413,7 +413,7 @@ const AdminPermissions = () => {
                 <tr>
                   <td>Sửa</td>
                   {permissions.map((item) => (
-                    <td className="text-center" key={item._id}>
+                    <td className="text-center" key={item.id}>
                       <input
                         type="checkbox"
                         checked={
@@ -430,7 +430,7 @@ const AdminPermissions = () => {
                 <tr>
                   <td>Xóa</td>
                   {permissions.map((item) => (
-                    <td className="text-center" key={item._id}>
+                    <td className="text-center" key={item.id}>
                       <input
                         type="checkbox"
                         checked={
@@ -447,7 +447,7 @@ const AdminPermissions = () => {
                 <tr>
                   <td>Thùng rác</td>
                   {permissions.map((item) => (
-                    <td className="text-center" key={item._id}>
+                    <td className="text-center" key={item.id}>
                       <input
                         type="checkbox"
                         checked={
