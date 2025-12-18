@@ -3,6 +3,10 @@
   top: -182px;
 }
 
+.top200 {
+  margin-top: -150px !important;
+}
+
 .banner-home {
   position: relative;
   display: flex;

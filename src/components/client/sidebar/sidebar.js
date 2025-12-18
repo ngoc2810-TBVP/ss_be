@@ -41,11 +41,12 @@ export default function HeaderComponent() {
 
   // Handle search input and fetch corresponding products
   const handleSearch = async (value) => {
-    if (!value.trim()) return setSearchResults([]); // Clear if query is empty
     setLoadingSearch(true);
     try {
       const res = await fetch(`${API}/products/search?query=${value}`);
       const data = await res.json();
+
+      console.log("data: ", data);
       setSearchResults(data.products || []); // Fallback to empty array if no products found
     } catch (error) {
       console.error("Search error:", error);
@@ -148,39 +149,42 @@ export default function HeaderComponent() {
           </div>
 
           <div className="header-search">
-            <Input.Search
+            <Input
               placeholder="Nhập từ khóa cần tìm"
-              onSearch={handleSearch}
-              enterButton
-              style={{ width: 300 }}
+              value={value}
+              onChange={(e) => {
+                const val = e.target.value;
+                setValue(val);
+                if (val.trim()) {
+                  handleSearch(val);
+                } else {
+                  setSearchResults([]);
+                }
+              }}
+              style={{ width: 400 }}
             />
-          </div>
 
-          {searchResults.length > 0 && (
-            <Dropdown
-              overlay={
+            {searchResults.length > 0 && (
+              <div className="search-result-box">
                 <List
+                  loading={loadingSearch}
                   dataSource={searchResults}
                   renderItem={(item) => (
-                    <List.Item onClick={() => handleProductClick(item.slug)}>
+                    <List.Item
+                      className="search-item"
+                      onClick={() => handleProductClick(item.slug)}
+                    >
                       <List.Item.Meta
-                        avatar={<Avatar src={item.thumbnail} />}
+                        avatar={<Avatar src={item.thumbnail} className="avtSearch"/>}
                         title={item.title}
-                        description={`Price: ${item.price.toLocaleString()}₫`}
+                        description={`${item.price.toLocaleString()}₫`}
                       />
                     </List.Item>
                   )}
                 />
-              }
-              trigger={["click"]}
-              open={searchResults.length > 0} // Replaced 'visible' with 'open'
-            >
-              <Button
-                className="search-dropdown-trigger"
-                style={{ display: "none" }}
-              />
-            </Dropdown>
-          )}
+              </div>
+            )}
+          </div>
 
           <div className="header-info">
             <div className="header-info-item">

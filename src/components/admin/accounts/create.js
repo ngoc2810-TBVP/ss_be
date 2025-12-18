@@ -48,7 +48,6 @@ const AdminCreateAccount = () => {
         onFinish={onFinish}
         initialValues={{
           status: 'active',
-          featured: 'Màu xám',
           position: 1
         }}
       >

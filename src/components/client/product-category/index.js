@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Button, Row, Col, Input, Badge, Modal } from "antd";
+import { Badge } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
-import "./index.css";
+import "../home/index.css";
 import priceNewProducts from "../helper/product";
 
 function ClientProductsInCategory({ permissions, permission }) {
@@ -9,7 +9,7 @@ function ClientProductsInCategory({ permissions, permission }) {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [selectionType, setSelectionType] = useState("checkbox");
+
   const { slug } = useParams();
   const navigate = useNavigate();
 
@@ -21,21 +21,10 @@ function ClientProductsInCategory({ permissions, permission }) {
 
         console.log("json: ", json);
 
-        document.title = json.pageTitle;
+        document.title = json.pageTitle || "Danh mục sản phẩm";
 
-        // Kiểm tra xem dữ liệu trả về có đúng dạng mảng không
-        if (json.code == 400) {
-          setProducts([]);
-          console.log("prd: ", products);
-        } else {
-          if (Array.isArray(json.data)) {
-            // Kiểm tra là mảng
-            setProducts(priceNewProducts(json.data));
-            console.log("prd: ", products);
-          } else {
-            setProducts([]); // Nếu không phải mảng, đặt giá trị mặc định là mảng trống
-          }
-        }
+        // ✅ FIX: xử lý giá trước khi setState
+        setProducts(priceNewProducts(json.data));
       } catch (error) {
         setError(error.message);
       } finally {
@@ -53,56 +42,57 @@ function ClientProductsInCategory({ permissions, permission }) {
     navigate(`/${item.slug}`);
   };
 
+  // ✅ FIX: formatCurrency an toàn
   function formatCurrency(number) {
-    const numberString = number.toString();
-    const formattedNumber = numberString.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-    const formattedCurrency = formattedNumber + "₫";
-
-    return formattedCurrency;
+    if (number === undefined || number === null) return "";
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + "₫";
   }
 
   return (
     <>
-      <div>
-        {Array.isArray(products) && products.length > 0 ? ( // Kiểm tra trước khi render
-          <div className="products__main">
-            {products.map(
-              (item) =>
-                item.title && (
-                  <div
-                    className="products__main--item"
-                    onClick={() => handleProductName(item)}
+      <div className="category">
+        <div className="products__main-feature top200">
+          {products && products.length > 0 ? (
+            products.map((item) => {
+              if (!item || !item.title) return null;
+
+              return (
+                <div
+                  key={item._id}
+                  className="products__main--item"
+                  onClick={() => handleProductName(item)}
+                >
+                  <Badge.Ribbon
+                    className="badge badge2"
+                    text={`Giảm ${item.discountPercentage}%`}
+                    color="red"
                   >
-                    <Badge.Ribbon
-                      className="badge"
-                      text={`Giảm ${item?.discountPercentage}%`}
-                      color="red"
-                    >
-                      <img
-                        className="image__product--main"
-                        src={item.thumbnail}
-                      />
-                      <div className="titleVPrice">
-                        <span className="title-badge ">{item.title}</span>
-                        <div className="price-badge ">
-                          <span className="priceDiscount-badge ">
-                            <strong>{formatCurrency(item.priceNew)}</strong>
-                          </span>
-                          <span className="priceOriginal-badge ">
-                            <strong>{formatCurrency(item.price)}</strong>
-                          </span>
-                        </div>
+                    <img
+                      className="image__product--main-badge"
+                      src={item.thumbnail}
+                      alt={item.title}
+                    />
+                    <div className="titleVPrice">
+                      <span className="title-badge">{item.title}</span>
+                      <div className="price-badge">
+                        <span className="priceDiscount-badge">
+                          <strong>{formatCurrency(item.priceNew)}</strong>
+                        </span>
+                        <span className="priceOriginal-badge">
+                          <strong>{formatCurrency(item.price)}</strong>
+                        </span>
                       </div>
-                    </Badge.Ribbon>
-                  </div>
-                )
-            )}
-          </div>
-        ) : (
-          <div className="products__main">
-            <div className="container">Không tồn tại sản phẩm nào</div>
-          </div>
-        )}
+                    </div>
+                  </Badge.Ribbon>
+                </div>
+              );
+            })
+          ) : (
+            <div className="products__main">
+              <div className="container"></div>
+            </div>
+          )}
+        </div>
       </div>
     </>
   );

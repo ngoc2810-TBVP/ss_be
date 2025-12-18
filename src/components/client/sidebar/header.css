@@ -147,10 +147,36 @@
   margin-left: 8px;
 }
 
+.header-search {
+  position: relative;
+  z-index: 99999;
+}
+
 .header-search input {
   width: 300px;
   padding: 5px;
   border-radius: 20px;
+}
+
+.search-result-box {
+  position: absolute;
+  background-color: #fff;
+  width: 100%;
+  height: auto;
+  top: 35px;
+}
+
+.search-item {
+  padding-left: 20px !important;
+}
+
+.search-item:hover .avtSearch {
+  background-color: #fff;
+  border: 2px #fff solid;
+}
+
+.search-item:hover {
+  background-color: #ddd;
 }
 
 .header-login {

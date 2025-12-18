@@ -108,6 +108,7 @@ function App() {
                 </PermissionMiddleware>
               }
             />
+            orders_view 
 
             <Route
               path="users"

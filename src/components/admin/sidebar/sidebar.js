@@ -216,7 +216,7 @@ export default function SidebarAdmin({ toggleTheme }) {
     });
   }
 
-  if (permissions.includes("products_view")) {
+  if (permissions.includes("orders_view")) {
     items.push({
       label: (
         <Link to="/admin/orders">

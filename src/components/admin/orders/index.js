@@ -1,5 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { Table, Button, Modal, Select, Tag, Typography, message, Row, Col } from "antd";
+import {
+  Table,
+  Button,
+  Modal,
+  Select,
+  Tag,
+  Typography,
+  message,
+  Row,
+  Col,
+} from "antd";
 import axiosToken from "../../context/axiosToken";
 import moment from "moment";
 import "./AdminOrders.css";
@@ -33,6 +43,8 @@ function AdminOrders() {
 
   const handleChangeStatus = (order) => {
     setSelectedOrder(order);
+
+    console.log("order: ", selectedOrder);
     setNewStatus(order.status);
     setStatusModalVisible(true);
   };
@@ -51,6 +63,7 @@ function AdminOrders() {
       setStatusModalVisible(false);
       message.success("Cập nhật trạng thái thành công!");
     } catch (err) {
+      console.log("err: ", err);
       message.error("Cập nhật thất bại!");
     } finally {
       setLoading(false);

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Button, Row, Col, Input, Badge, Carousel } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
 import "./index.css";
-import priceNewProduct from "../helper/product";
+import priceNewProduct from "../helper/priceNew";
 
 function HomeClient({ permissions, permission }) {
   const API = process.env.REACT_APP_API_URL_CLIENT;
@@ -154,12 +154,7 @@ function HomeClient({ permissions, permission }) {
                                 <div className="price-badge">
                                   <span className="priceDiscount-badge">
                                     <strong>
-                                      {formatCurrency(
-                                        priceNewProduct(
-                                          item.price,
-                                          item.discountPercentage
-                                        )
-                                      )}
+                                      {formatCurrency(priceNewProduct(item))}
                                     </strong>
                                   </span>
                                   <span className="priceOriginal-badge">

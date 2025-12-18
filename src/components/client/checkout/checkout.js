@@ -89,7 +89,6 @@ const CheckoutClient = () => {
           headers: { Authorization: `Bearer ${token}` },
         });
         setCartItems([]);
-        navigate("/orders");
       }
     } catch (err) {
       console.log("CHECKOUT ERROR:", err.response?.data || err);

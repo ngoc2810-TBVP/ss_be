@@ -68,7 +68,7 @@ const AdminCreateProduct = () => {
       .then((response) => {
         console.log("Success:", response.data);
         setLoading(false);
-        // form.resetFields(); // Reset form sau khi tạo thành công
+        form.resetFields(); // Reset form sau khi tạo thành công
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -198,9 +198,9 @@ const AdminCreateProduct = () => {
           <Input placeholder="Trạng thái sản phẩm" />
         </Form.Item>
 
-        <Form.Item label="Màu" name="color">
+        {/* <Form.Item label="Màu" name="color">
           <Input placeholder="Nhập mà" />
-        </Form.Item>
+        </Form.Item> */}
 
         <Form.Item label="Vị trí" name="position">
           <Input type="number" placeholder="Nhập vị trí sản phẩm" />
