@@ -137,11 +137,11 @@ function AdminAccounts() {
     },
     {
       title: "Trạng thái",
-      dataIndex: "status",
-      key: "status",
-      render: (status) => (
+      dataIndex: "deleted",
+      key: "deleted",
+      render: (deleted) => (
         <Button className="btn-warn" type="primary">
-          {status === "active" ? "Hoạt động" : "Dừng hoạt động"}
+          {deleted === false ? "Hoạt động" : "Dừng hoạt động"}
         </Button>
       ),
     },

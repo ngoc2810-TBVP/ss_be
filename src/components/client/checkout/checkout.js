@@ -33,6 +33,8 @@ const CheckoutClient = () => {
         },
       });
 
+      console.log("res: ", res);
+
       if (res.data.status === "success") {
         setCartItems(res.data.cart.items);
       } else {

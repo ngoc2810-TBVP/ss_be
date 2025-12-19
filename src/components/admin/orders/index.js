@@ -52,7 +52,7 @@ function AdminOrders() {
   const handleUpdateStatus = async () => {
     setLoading(true);
     try {
-      await axiosToken.put(`${API}/orders/${selectedOrder._id}/status`, {
+      await axiosToken.put(`${API}/order/${selectedOrder._id}/status`, {
         status: newStatus,
       });
       setOrders((prev) =>
